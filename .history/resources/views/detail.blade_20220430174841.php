@@ -1,0 +1,31 @@
+<x-app-layout>
+<div class="relative flex items-top justify-center h-auto bg-gray-100 dark:bg-white sm:items-center py-4 sm:pt-0">
+
+<div class="max-w-6xl m-16 px-6 mx-auto sm:px-6 lg:px-8">
+    <p class="text-2xl flex justify-center pt-8 bg-white dark:bg-gray-100 overflow-hidden shadow sm:rounded-lg sm:pt-0 dark:text-gray-900">
+        {{ $offers->title }}
+    </p>
+
+    <div class="mt-16 bg-white dark:bg-gray-100 overflow-hidden shadow sm:rounded-lg">
+        <div class="p-6">
+            <div class="flex items-center">
+                <x-jet-label class="justify-start w-full ml-4 mr-16 text-lg" for="keyword" value="{{ __('フリーワード') }}" />
+                <div class="ml-4 line-break max-w-xl text-gray-600 dark:text-gray-600 text-base">
+                    @if(isset($offers->contents))
+                    {{ $offers->contents }}
+                    @else
+                    null
+                    @endif
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center mt-6">
+                <x-jet-button class="m-4 text-xl">
+                    {{ __('応募画面へ進む') }}
+                </x-jet-button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</x-app-layout>
