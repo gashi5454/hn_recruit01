@@ -1,0 +1,23 @@
+<x-app-layout>
+    <div class="flex items-top justify-center h-auto bg-gray-100 dark:bg-white sm:items-center py-4 sm:pt-0">
+
+        <div class="max-w-6xl mt-10 py-10 mx-auto sm:px-6 lg:px-8">
+            <p class="text-lg flex justify-center pt-8">
+                応募完了
+            </p>
+
+            <div class="mt-8 bg-white border-01">
+                <div class="p-8">
+                    ライブオファーへの応募が完了しました
+                </div>
+                <form action="{{ url('/')}}" method="get">
+                    <div class="p-8 flex items-center">
+                        <x-jet-button class="mx-auto text-xl">
+                            {{ __('トップへ戻る') }}
+                        </x-jet-button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</x-app-layout>

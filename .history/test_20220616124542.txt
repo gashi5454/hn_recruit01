@@ -1,0 +1,951 @@
+<!-- applies -->
+<!-- 大きい画面 -->
+<div class="p-6 xs:hidden min:hidden sm:block md:block lg:block">
+    <form form="submitApp" action="{{ url('/confirm_applies')}}" method="post" enctype="multipart/form-data">
+    {{ csrf_field()}}
+    {{method_field('post')}}
+    @if ($errors->any())
+        <div class="font-medium text-red-600 text-center">{{ __('Whoops! Something went wrong.') }}</div>
+        <ul class="mt-3 ml-56 list-disc list-inside text-sm text-red-600 text-left">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title req font-medium text-sm text-gray-700" style="width: 170px;">代表者氏名</div>
+        <div class="applies-table-data">
+            @auth
+            <x-jet-input value="{{ old('name', Auth::user()->name) }}" id="name" name="name" style="width: 370px; height: 36px;" type="text" placeholder="例）山田太郎" autofocus autocomplete="name" />
+            @else
+            <x-jet-input value="{{ old('name') }}" id="name" name="name" style="width: 370px; height: 36px;" type="text" placeholder="例）山田太郎" autofocus autocomplete="name" />
+            @endauth
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title req font-medium text-sm text-gray-700" style="width: 170px;">ふりがな</div>
+        <div class="applies-table-data">
+            @auth
+            <x-jet-input value="{{ old('kana', Auth::user()->kana) }}" id="kana" name="kana" style="width: 370px; height: 36px;" type="text" placeholder="例）やまだたろう" autofocus autocomplete="kana" />
+            @else
+            <x-jet-input value="{{ old('kana') }}" id="kana" name="kana" style="width: 370px; height: 36px;" type="text" placeholder="例）やまだたろう" autofocus autocomplete="kana" />
+            @endauth
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title req font-medium text-sm text-gray-700" style="width: 170px;">バンド/ユニット名</div>
+        <div class="applies-table-data">
+            @auth
+            <x-jet-input value="{{ old('name_bands', Auth::user()->name_bands) }}" id="name_bands" name="name_bands" style="width: 370px; height: 36px;" type="text" placeholder="例）山田太郎band" autofocus autocomplete="name_bands" />
+            @else
+            <x-jet-input value="{{ old('name_bands') }}" id="name_bands" name="name_bands" style="width: 370px; height: 36px;" type="text" placeholder="例）山田太郎band" autofocus autocomplete="name_bands" />
+            @endauth
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title req font-medium text-sm text-gray-700" style="width: 170px;">フリガナ</div>
+        <div class="applies-table-data">
+            @auth
+            <x-jet-input value="{{ old('kana_bands', Auth::user()->kana_bands) }}" id="kana_bands" name="kana_bands" style="width: 370px; height: 36px;" type="text" placeholder="例）ヤマダタロウバンド" autofocus autocomplete="kana_bands" />
+            @else
+            <x-jet-input value="{{ old('kana_bands') }}" id="kana_bands" name="kana_bands" style="width: 370px; height: 36px;" type="text" placeholder="例）ヤマダタロウバンド" autofocus autocomplete="kana_bands" />
+            @endauth
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title req font-medium text-sm text-gray-700" style="width: 170px;">メールアドレス</div>
+        <div class="applies-table-data">
+            @auth
+            <x-jet-input value="{{ old('email', Auth::user()->email) }}" id="email" name="email" style="width: 370px; height: 36px;" type="email" autofocus autocomplete="email" />
+            @else
+            <x-jet-input value="{{ old('email') }}" id="email" name="email" style="width: 370px; height: 36px;" type="email" autofocus autocomplete="email" />
+            @endauth
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 170px;">電話番号</div>
+        <div class="applies-table-data">
+            @auth
+            <x-jet-input value="{{ old('tel', Auth::user()->tel) }}" id="tel" name="tel" style="width: 370px; height: 36px;" type="text" autofocus autocomplete="tel" />
+            @else
+            <x-jet-input value="{{ old('tel') }}" id="tel" name="tel" style="width: 370px; height: 36px;" type="text" autofocus autocomplete="tel" />
+            @endauth
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 170px;">その他連絡先</div>
+        <div class="applies-table-data">
+            @auth
+            <x-jet-input value="{{ old('other_contact', Auth::user()->other_contact) }}" id="other_contact" name="other_contact" style="width: 370px; height: 36px;" type="text" placeholder="LINE ID、Skypeなど" autofocus autocomplete="other_contact" />
+            @else
+            <x-jet-input value="{{ old('other_contact') }}" id="other_contact" name="other_contact" style="width: 370px; height: 36px;" type="text" placeholder="LINE ID、Skypeなど" autofocus autocomplete="other_contact" />
+            @endauth
+        </div>
+    </div>
+
+    <x-jet-section-border />
+
+    <div class="mt-4 mb-2 ml-8">
+        <x-jet-label for="composition" value="{{ __('バンド/ユニット編成') }}" />
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">ボーカル</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                <select id="vo_num" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="vo_num">
+                @foreach(config('bands_num') as $index => $name)
+                    @if (!is_null(old('vo_num')))
+                        @if ($index == old('vo_num'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->vo_num)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">使用楽器：</div>
+                <select id="vo_inst" onchange="changeInstView()" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 180px; height: 40px;" name="vo_inst">
+                @foreach(config('bands_inst') as $index => $name)
+                    @if (!is_null(old('vo_inst')))
+                        @if ($index == old('vo_inst'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->vo_inst)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+            @auth
+                <div id="instIsOpen"><x-jet-input value="{{ old('vo_inst_other', Auth::user()->vo_inst_other) }}" id="vo_inst_other" name="vo_inst_other" class="my-1" style="width: 250px; height: 36px;" type="text" /></div>
+            @else
+                <div id="instIsOpen"><x-jet-input value="{{ old('vo_inst_other') }}" id="vo_inst_other" name="vo_inst_other" class="my-1" style="width: 250px; height: 36px;" type="text" /></div>
+            @endauth
+            </div>
+            <div class="flex items-center justify-end my-1 text-gray-600 dark:text-gray-400 text-sm">
+                ボーカルと楽器を兼任される場合のみご記入ください
+            </div>
+        </div>
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">エレキギター</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                <select id="elgt_num" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="elgt_num">
+                @foreach(config('bands_num') as $index => $name)
+                    @if (!is_null(old('elgt_num')))
+                        @if ($index == old('elgt_num'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->elgt_num)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                <select id="elgt_mic" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="elgt_mic">
+                @foreach(config('bands_mic') as $index => $name)
+                    @if (!is_null(old('elgt_mic')))
+                        @if ($index == old('elgt_mic'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->elgt_mic)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">エレキベース</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                <select id="elba_num" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="elba_num">
+                @foreach(config('bands_num') as $index => $name)
+                    @if (!is_null(old('elba_num')))
+                        @if ($index == old('elba_num'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->elba_num)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                <select id="elba_mic" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="elba_mic">
+                @foreach(config('bands_mic') as $index => $name)
+                    @if (!is_null(old('elba_mic')))
+                        @if ($index == old('elba_mic'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->elba_mic)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">ドラム</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                <select id="dr_num" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="dr_num">
+                @foreach(config('bands_num') as $index => $name)
+                    @if (!is_null(old('dr_num')))
+                        @if ($index == old('dr_num'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->dr_num)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                <select id="dr_mic" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="dr_mic">
+                @foreach(config('bands_mic') as $index => $name)
+                    @if (!is_null(old('dr_mic')))
+                        @if ($index == old('dr_mic'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->dr_mic)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">キーボード</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                <select id="key_num" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="key_num">
+                @foreach(config('bands_num') as $index => $name)
+                    @if (!is_null(old('key_num')))
+                        @if ($index == old('key_num'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->key_num)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                <select id="key_mic" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="key_mic">
+                @foreach(config('bands_mic') as $index => $name)
+                    @if (!is_null(old('key_mic')))
+                        @if ($index == old('key_mic'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->key_mic)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">アコースティック<br>ギター</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">タイプ：</div>
+                <select id="acgt_type" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 150px; height: 40px;" name="acgt_type">
+                @foreach(config('bands_type') as $index => $name)
+                    @if (!is_null(old('acgt_type')))
+                        @if ($index == old('acgt_type'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->acgt_type)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                <select id="acgt_num" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="acgt_num">
+                @foreach(config('bands_num') as $index => $name)
+                    @if (!is_null(old('acgt_num')))
+                        @if ($index == old('acgt_num'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->acgt_num)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                <select id="acgt_mic" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="acgt_mic">
+                @foreach(config('bands_mic') as $index => $name)
+                    @if (!is_null(old('acgt_mic')))
+                        @if ($index == old('acgt_mic'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->acgt_mic)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">アコースティック<br>ベース</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">タイプ：</div>
+                <select id="acba_type" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 150px; height: 40px;" name="acba_type">
+                @foreach(config('bands_type') as $index => $name)
+                    @if (!is_null(old('acba_type')))
+                        @if ($index == old('acba_type'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->acba_type)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                <select id="acba_num" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="acba_num">
+                @foreach(config('bands_num') as $index => $name)
+                    @if (!is_null(old('acba_num')))
+                        @if ($index == old('acba_num'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->acba_num)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                <select id="acba_mic" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="acba_mic">
+                @foreach(config('bands_mic') as $index => $name)
+                    @if (!is_null(old('acba_mic')))
+                        @if ($index == old('acba_mic'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->acba_mic)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="composition-table">
+        <div class="composition-table-title">その他</div>
+        <div class="composition-table-data">
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">パート：</div>
+                @auth
+                    <x-jet-input id="composition_other" value="{{ old('other_part_num', Auth::user()->other_part_num) }}" style="width: 250px; height: 40px;" type="text" name="other_part_num" placeholder="例）DJ：1人、パーカッション：1人" />
+                @else
+                    <x-jet-input id="composition_other" value="{{ old('other_part_num') }}" style="width: 250px; height: 40px;" type="text" name="other_part_num" placeholder="例）DJ：1人、パーカッション：1人" />
+                @endauth
+            </div>
+            <div class="flex items-center justify-end my-1">
+                <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                <select id="other_mic" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 120px; height: 40px;" name="other_mic">
+                @foreach(config('bands_mic') as $index => $name)
+                    @if (!is_null(old('other_mic')))
+                        @if ($index == old('other_mic'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->other_mic)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <x-jet-section-border />
+
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 120px;">ジャンル</div>
+        <div class="applies-table-data">
+            <select id="genre" name="genre" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" style="width: 200px; height: 36px;">
+            @foreach(config('genre') as $index => $name)
+                    @if (!is_null(old('genre')))
+                        @if ($index == old('genre'))
+                            <option value="{{ $index }}" selected>{{ $name }}</option>
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endif
+                    @else
+                        @auth
+                            @if ($index == Auth::user()->genre)
+                                <option value="{{ $index }}" selected>{{ $name }}</option>
+                            @else
+                                <option value="{{ $index }}">{{ $name }}</option>
+                            @endif
+                        @else
+                            <option value="{{ $index }}">{{ $name }}</option>
+                        @endauth
+                    @endif
+                @endforeach
+            </select>
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 120px;">音源</div>
+        <div class="applies-table-data">
+        <select id="audio_select" onchange="changeAudioView()" name="audio_select" class="my-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm focus:outline-none" style="width: 200px; height: 36px;">
+            <option selected value="">選択</option>
+            <option value="data">ファイルを送信する</option>
+            <option value="url">動画などのURLを送信する</option>
+        </select>
+            @auth
+                <div id="dataIsOpen"><input value="{{ old('audio_data', Auth::user()->audio_data) }}" id="audio_data" name="audio_data" class="my-1" type="file" /></div>
+                <div id="urlIsOpen"><x-jet-input value="{{ old('audio_url', Auth::user()->audio_url) }}" id="audio_url" name="audio_url" class="my-1" style="width: 395px; height: 36px;" type="text" placeholder="youtubeのURLなど" /></div>
+                @else
+                <div id="dataIsOpen"><input value="{{ old('audio_data') }}" id="audio_data" name="audio_data" class="my-1" type="file" /></div>
+                <div id="urlIsOpen"><x-jet-input value="{{ old('audio_url') }}" id="audio_url" name="audio_url" class="my-1" style="width: 395px; height: 36px;" type="text" placeholder="youtubeのURLなど" /></div>
+            @endauth
+        </div>
+    </div>
+    <div class="applies-table mx-auto min:mx-0 sm:mx-auto md:mx-auto lg:mx-auto">
+        <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 120px;">備考</div>
+        <div class="applies-table-data">
+            @auth
+            <textarea type="text" id="remarks" name="remarks" rows="10" cols="40" style="height: 130px;" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('remarks' , Auth::user()->remarks) }}</textarea>
+            @else
+            <textarea type="text" id="remarks" name="remarks" rows="10" cols="40" style="height: 130px;" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">{{ old('remarks') }}</textarea>
+            @endauth
+        </div>
+    </div>
+    <div class="mt-8 flex items-center justify-center">
+        @auth
+        <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
+        @endauth
+        <input type="hidden" value="{{ $eventer_id }}" name="eventer_id">
+        <input type="hidden" value="{{ $eventer_email }}" name="eventer_email">
+        <input type="hidden" value="{{ $offer_id }}" name="offer_id">
+        <input type="hidden" value="{{ $appear_date }}" name="appear_date">
+        <input type="hidden" value="{{ $title }}" name="title">
+        <input type="hidden" value="{{ $eventer_genre }}" name="eventer_genre">
+        <input type="hidden" value="{{ $place }}" name="place">
+        <x-jet-button class="m-4 text-base">
+            {{ __('確認') }}
+        </x-jet-button>
+    </div>
+</div><!-- p-6 大きい画面-->
+
+
+
+
+
+
+<!-- confirm_applies -->
+<x-applies-layout>
+<div class="relative flex items-top justify-center h-auto bg-gray-100 dark:bg-white sm:items-center py-4 sm:pt-0">
+
+<div class="max-w-7xl mt-10 py-10 mx-auto sm:px-6 lg:px-8">
+    <p class="text-xl flex justify-center mx-4 pt-8 px-40 sm:pt-0 dark:text-gray-900">
+        送信内容の確認
+    </p>
+
+    <div class="mt-8 bg-white dark:bg-gray-100 overflow-hidden shadow sm:rounded-lg">
+        <!-- 大画面 -->
+        <div class="p-6">
+            <div class="items-center">
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">代表者氏名</div>
+                    <div class="applies-table-data">
+                    @isset($applies['name'])
+                        {{ old('name' , $applies['name']) }}
+                    @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">ふりがな</div>
+                    <div class="applies-table-data">
+                    @isset($applies['kana'])
+                        {{ old('kana' , $applies['kana']) }}
+                    @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">バンド/ユニット名</div>
+                    <div class="applies-table-data">
+                    @isset($applies['name_bands'])
+                        {{ old('name_bands' , $applies['name_bands']) }}
+                    @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">フリガナ</div>
+                    <div class="applies-table-data">
+                    @isset($applies['kana_bands'])
+                        {{ old('kana_bands' , $applies['kana_bands']) }}
+                    @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">メールアドレス</div>
+                    <div class="applies-table-data">
+                    @isset($applies['email'])
+                        {{ old('email' , $applies['email']) }}
+                    @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">電話番号</div>
+                    <div class="applies-table-data">
+                    @isset($applies['tel'])
+                        {{ old('tel' , $applies['tel']) }}
+                    @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">その他連絡先</div>
+                    <div class="applies-table-data">
+                    @isset($applies['other_contact'])
+                        {{ old('other_contact' , $applies['other_contact']) }}
+                    @endisset
+                    </div>
+                </div>
+
+                <x-jet-section-border />
+
+                <div class="mt-4 mb-2 ml-8">
+                    <x-jet-label for="composition" value="{{ __('バンド/ユニット編成') }}" />
+                </div>
+
+                @isset($applies['vo_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">ボーカル</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                            {{ old('vo_num' , $applies['vo_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">使用楽器：</div>
+                            @isset($applies['vo_inst'])
+                                {{ old('vo_inst' , $applies['vo_inst']) }}
+                            @else
+                                {{ old('vo_inst' , "なし") }}
+                            @endisset
+                            @isset($applies['vo_inst_other'])
+                                {{ old('vo_inst_other' , $applies['vo_inst_other']) }}
+                            @else
+                                {{ old('vo_inst_other' , "") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                @isset($applies['elgt_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">エレキギター</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                            {{ old('elgt_num' , $applies['elgt_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                            @isset($applies['elgt_mic'])
+                                {{ old('elgt_mic' , $applies['elgt_mic']) }}
+                            @else
+                                {{ old('elgt_mic' , "なし") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                @isset($applies['elba_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">エレキベース</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                            {{ old('elba_num' , $applies['elba_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                            @isset($applies['elba_mic'])
+                                {{ old('elba_mic' , $applies['elba_mic']) }}
+                            @else
+                                {{ old('elba_mic' , "なし") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                @isset($applies['dr_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">ドラム</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                            {{ old('dr_num' , $applies['dr_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                            @isset($applies['dr_mic'])
+                                {{ old('dr_mic' , $applies['dr_mic']) }}
+                            @else
+                                {{ old('dr_mic' , "なし") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                @isset($applies['key_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">キーボード</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                            {{ old('key_num' , $applies['key_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                            @isset($applies['key_mic'])
+                                {{ old('key_mic' , $applies['key_mic']) }}
+                            @else
+                                {{ old('key_mic' , "なし") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                @isset($applies['acgt_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">アコースティック<br>ギター</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">タイプ：</div>
+                            @isset($applies['acgt_type'])
+                                {{ old('acgt_type' , $applies['acgt_type']) }}
+                            @else
+                                {{ old('acgt_type') }}
+                            @endisset
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                            {{ old('acgt_num' , $applies['acgt_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                            @isset($applies['acgt_mic'])
+                                {{ old('acgt_mic' , $applies['acgt_mic']) }}
+                            @else
+                                {{ old('acgt_mic' , "なし") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                @isset($applies['acba_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">アコースティック<br>ベース</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">タイプ：</div>
+                            @isset($applies['acgt_type'])
+                                {{ old('acgt_type' , $applies['acgt_type']) }}
+                            @else
+                                {{ old('acgt_type') }}
+                            @endisset
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">人数：</div>
+                            {{ old('acba_num' , $applies['acba_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                            @isset($applies['acgt_mic'])
+                                {{ old('acgt_mic' , $applies['acgt_mic']) }}
+                            @else
+                                {{ old('acgt_mic' , "なし") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                @isset($applies['other_part_num'])
+                <div class="composition-table">
+                    <div class="composition-table-title">その他</div>
+                    <div class="composition-table-data">
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">パート：</div>
+                            {{ old('other_part_num' , $applies['other_part_num']) }}
+                        </div>
+                        <div class="flex items-center justify-center my-1">
+                            <div class="text-gray-900 dark:text-gray-900 text-base">コーラスマイク本数：</div>
+                            @isset($applies['other_mic'])
+                                {{ old('other_mic' , $applies['other_mic']) }}
+                            @else
+                                {{ old('other_mic' , "なし") }}
+                            @endisset
+                        </div>
+                    </div>
+                </div>
+                @endisset
+
+                <x-jet-section-border />
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">ジャンル</div>
+                    <div class="applies-table-data">
+                        @isset($applies['genre'])
+                            {{ old('genre' , $applies['genre']) }}
+                        @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">音源</div>
+                    <div class="applies-table-data">
+                        @isset($applies['audio_data_name'])
+                            <div class="mt-2">{{ old('audio_data_name' , $applies['audio_data_name']) }}</div>
+                        @endisset
+                        @isset($applies['audio_url'])
+                            <div class="mt-2">{{ old('audio_url' , $applies['audio_url']) }}</div>
+                        @endisset
+                    </div>
+                </div>
+
+                <div class="applies-table w-full mx-auto" style="max-width:350px">
+                    <div class="applies-table-title font-medium text-sm text-gray-700" style="width: 140px;">備考</div>
+                    <div class="applies-table-data">
+                        @isset($applies['remarks'])
+                            {{ old('remarks' , $applies['remarks']) }}
+                        @endisset
+                    </div>
+                </div>
+
+                <div class="mt-8 flex items-center justify-center">
+                <form action="{{ url('/send_applies')}}" method="post" enctype="multipart/form-data">
+                {{ csrf_field()}}
+                {{method_field('post')}}
+
+                @foreach($applies as $name => $value)
+                <input type="hidden" value="{{ $value }}" name="{{ $name }}">
+                @endforeach
+
+                <x-jet-button id="openModal" class="m-4 text-base">
+                    {{ __('送信') }}
+                </x-jet-button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</x-applies-layout>
+
