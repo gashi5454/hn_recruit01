@@ -23,5 +23,9 @@
     },
     "dependencies": {
         "yarn": "^1.22.18"
+    },
+    "engines": {
+        "node": "16.14.0",
+        "npm": "8.3.1"
     }
 }
